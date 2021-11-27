@@ -13,7 +13,19 @@
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-jet-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
+                        {{ __('Inicio') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('tipoproductos.index') }}" :active="request()->routeIs('tipoproductos.*')">
+                        {{ __('Tipo Productos') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('ingredientes.index') }}" :active="request()->routeIs('ingredientes.*')">
+                        {{ __('Ingredientes') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('productos.index') }}" :active="request()->routeIs('productos.*')">
+                        {{ __('Productos') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('ventas.index') }}" :active="request()->routeIs('ventas.*')">
+                        {{ __('Ventas') }}
                     </x-jet-nav-link>
                 </div>
             </div>
