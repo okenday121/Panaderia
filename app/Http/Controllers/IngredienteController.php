@@ -14,7 +14,8 @@ class IngredienteController extends Controller
      */
     public function index()
     {
-        //
+        $ingredientes = Ingrediente::all();
+        return view('ingredientes.index', compact('ingredientes'));
     }
 
     /**
@@ -24,7 +25,7 @@ class IngredienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('ingredientes.create');
     }
 
     /**
@@ -35,7 +36,16 @@ class IngredienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'detalle' => 'required',          
+        ]);
+
+        $ingrediente = new Ingrediente;
+        $ingrediente->detalle = $request->input('detalle');    
+
+        $ingrediente->save();
+
+        return redirect()->route('ingredientes.show', $ingrediente);
     }
 
     /**
@@ -46,7 +56,7 @@ class IngredienteController extends Controller
      */
     public function show(Ingrediente $ingrediente)
     {
-        //
+        return view('ingredientes.show', compact('ingrediente'));
     }
 
     /**
@@ -57,7 +67,7 @@ class IngredienteController extends Controller
      */
     public function edit(Ingrediente $ingrediente)
     {
-        //
+        return view('ingredientes.edit', compact('ingrediente'));
     }
 
     /**
@@ -69,7 +79,15 @@ class IngredienteController extends Controller
      */
     public function update(Request $request, Ingrediente $ingrediente)
     {
-        //
+        $request->validate([
+            'detalle' => 'required',         
+        ]);
+        $ingrediente->detalle = $request->input('detalle');
+
+        $ingrediente->save();
+
+        $ingredientes = Ingrediente::all();        
+        return view('ingredientes.index', compact('ingredientes'));
     }
 
     /**
@@ -80,6 +98,7 @@ class IngredienteController extends Controller
      */
     public function destroy(Ingrediente $ingrediente)
     {
-        //
+        $ingrediente->delete();
+        return redirect()->route('ingredientes.index');
     }
 }
