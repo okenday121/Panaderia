@@ -14,7 +14,8 @@ class TipoProductoController extends Controller
      */
     public function index()
     {
-        //
+        $tipoproductos = TipoProducto::all();
+        return view('tipoproductos.index', compact('tipoproductos'));
     }
 
     /**
@@ -24,7 +25,7 @@ class TipoProductoController extends Controller
      */
     public function create()
     {
-        //
+        return view('tipoproductos.create');
     }
 
     /**
@@ -35,7 +36,18 @@ class TipoProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',          
+        ]);
+
+        $tipoproducto = new TipoProducto;
+        $tipoproducto->nombre = $request->input('nombre');    
+
+        $tipoproducto->save();
+
+        return redirect()->route('tipoproductos.show', $tipoproducto);
+        //$tipoproductos = TipoProducto::all();
+        //return view('tipoproductos.index', compact('tipoproductos'));
     }
 
     /**
@@ -44,9 +56,9 @@ class TipoProductoController extends Controller
      * @param  \App\Models\TipoProducto  $tipoProducto
      * @return \Illuminate\Http\Response
      */
-    public function show(TipoProducto $tipoProducto)
+    public function show(TipoProducto $tipoproducto)
     {
-        //
+        return view('tipoproductos.show', compact('tipoproducto'));
     }
 
     /**
@@ -55,9 +67,9 @@ class TipoProductoController extends Controller
      * @param  \App\Models\TipoProducto  $tipoProducto
      * @return \Illuminate\Http\Response
      */
-    public function edit(TipoProducto $tipoProducto)
+    public function edit(TipoProducto $tipoproducto)
     {
-        //
+        return view('tipoproductos.edit', compact('tipoproducto'));
     }
 
     /**
@@ -67,9 +79,17 @@ class TipoProductoController extends Controller
      * @param  \App\Models\TipoProducto  $tipoProducto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoProducto $tipoProducto)
+    public function update(Request $request, TipoProducto $tipoproducto)
     {
-        //
+        $request->validate([
+            'nombre' => 'required',         
+        ]);
+        $tipoproducto->nombre = $request->input('nombre');
+
+        $tipoproducto->save();
+
+        $tipoproductos = TipoProducto::all();        
+        return view('tipoproductos.index', compact('tipoproductos'));
     }
 
     /**
@@ -78,8 +98,9 @@ class TipoProductoController extends Controller
      * @param  \App\Models\TipoProducto  $tipoProducto
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoProducto $tipoProducto)
+    public function destroy(TipoProducto $tipoproducto)
     {
-        //
+        $tipoproducto->delete();
+        return redirect()->route('tipoproductos.index');
     }
 }
